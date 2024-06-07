@@ -5,7 +5,7 @@ python remind.py [args]
 
 # todo
 ```sh
-remind all                  # show all reminders
+remind all                  # DONE: show all reminders
 remind <message plus time>  # add a reminder
 remind                      # show all due reminders
 remind snz <id> <time>      # 'snooze' a reminder until time

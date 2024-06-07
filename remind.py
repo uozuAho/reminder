@@ -3,9 +3,7 @@ import sys
 
 def main():
     _, reminders_file, *args = sys.argv
-    # print(reminders_file)
-    # print(args)
-    if not args:
+    if args == ['all']:
         with open(reminders_file) as file:
             for line in file.readlines():
                 print(line.strip())
