@@ -14,7 +14,8 @@ def test_get_time_phrase(text, expected):
 
 
 time_of_cases = [
-    (datetime(2024, 6, 8, 12, 0, 0), "at 5", datetime(2024, 6, 8, 17, 0 ,0))
+    (datetime(2024, 6, 8, 12, 0, 0), "at 5", datetime(2024, 6, 8, 17, 0 ,0)),
+    (datetime(2024, 6, 8, 12, 0, 0), "at 5pm", datetime(2024, 6, 8, 17, 0 ,0))
 ]
 
 @pytest.mark.parametrize("time_now, phrase, expected", time_of_cases)

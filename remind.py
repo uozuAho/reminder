@@ -20,7 +20,7 @@ def get_time_phrase(str):
 
 def time_of(time_now: datetime, phrase: str) -> datetime:
     if phrase.startswith('at'):
-        number = int(re.findall(r'\d+$', phrase)[0])
+        number = int(re.findall(r'\d+', phrase)[0])
         return datetime(
             time_now.year,
             time_now.month,
