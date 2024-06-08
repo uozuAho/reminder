@@ -11,8 +11,9 @@ def main():
     else:
         pass
 
+
 def get_time_phrase(str):
-    a = re.search(r'at \d+')
+    a = re.findall(r'at \d+.*$', str)[-1]
     if a: return a
 
 
