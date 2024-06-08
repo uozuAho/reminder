@@ -14,6 +14,9 @@ def test_get_time_phrase(text, expected):
 
 
 time_of_cases = [
+    (datetime(2024, 6, 8, 8, 0, 0),  "at 9", datetime(2024, 6, 8, 9, 0 ,0)),
+    # todo: if it's past 9am, 9 means pm
+    # todo: if it's before 9am, 9 means 9am, 9pm means 9pm
     (datetime(2024, 6, 8, 12, 0, 0), "at 5", datetime(2024, 6, 8, 17, 0 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "at 5pm", datetime(2024, 6, 8, 17, 0 ,0))
 ]
