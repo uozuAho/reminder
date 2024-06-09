@@ -23,17 +23,21 @@ def get_time_phrase(str):
 
 def time_of(time_now: datetime, phrase: str) -> datetime:
     if phrase.startswith('at'):
-        return time_of_at(time_now, phrase)
+        return time_at(time_now, phrase)
     elif phrase.startswith('in'):
-        m = re.match(r'.*(\d)(.*)', phrase)
-        number = int(m.group(1))
-        units = m.group(2).strip()
-        if 'hour' in units:
-            return time_now + timedelta(hours=number)
+        return time_in(time_now, phrase)
     raise Exception("I dunno")
 
 
-def time_of_at(time_now: datetime, phrase: str) -> datetime:
+def time_in(time_now, phrase):
+    m = re.match(r'.*(\d)(.*)', phrase)
+    number = int(m.group(1))
+    units = m.group(2).strip()
+    if 'hour' in units:
+        return time_now + timedelta(hours=number)
+
+
+def time_at(time_now: datetime, phrase: str) -> datetime:
     m = re.match(r'.*(\d)(.*)', phrase)
     hour = int(m.group(1))
     ampm = m.group(2)
