@@ -27,7 +27,6 @@ remind snz [time]           # snooze most overdue reminder
 ```
 
 time phrases:
-- at 5pm
 - in 1 hour(s),day(s),week(s)
 - on friday
 - next week

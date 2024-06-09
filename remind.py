@@ -14,8 +14,11 @@ def main():
 
 
 def get_time_phrase(str):
-    a = re.findall(r'at \d+.*$', str)[-1]
-    if a: return a
+    a = re.findall(r'at \d+.*$', str)
+    if a: return a[-1]
+    a = re.findall(r'in \d+.*$', str)
+    if a: return a[-1]
+    raise Exception("no time phrase found")
 
 
 def time_of(time_now: datetime, phrase: str) -> datetime:
@@ -34,7 +37,7 @@ def time_of(time_now: datetime, phrase: str) -> datetime:
             time_now.day,
             hour
         )
-    return datetime.now()
+    raise Exception("I dunno")
 
 
 if __name__ == '__main__':
