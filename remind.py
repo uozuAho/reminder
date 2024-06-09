@@ -23,21 +23,25 @@ def get_time_phrase(str):
 
 def time_of(time_now: datetime, phrase: str) -> datetime:
     if phrase.startswith('at'):
-        m = re.match(r'.*(\d)(.*)', phrase)
-        hour = int(m.group(1))
-        ampm = m.group(2)
-        if ampm == 'pm':
-            hour += 12
-        if not ampm:
-            if time_now.hour > hour:
-                hour += 12
-        return datetime(
-            time_now.year,
-            time_now.month,
-            time_now.day,
-            hour
-        )
+        return time_of_at(time_now, phrase)
     raise Exception("I dunno")
+
+
+def time_of_at(time_now: datetime, phrase: str) -> datetime:
+    m = re.match(r'.*(\d)(.*)', phrase)
+    hour = int(m.group(1))
+    ampm = m.group(2)
+    if ampm == 'pm':
+        hour += 12
+    if not ampm:
+        if time_now.hour > hour:
+            hour += 12
+    return datetime(
+        time_now.year,
+        time_now.month,
+        time_now.day,
+        hour
+    )
 
 
 if __name__ == '__main__':
