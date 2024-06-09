@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 import sys
 import re
 
@@ -24,6 +24,12 @@ def get_time_phrase(str):
 def time_of(time_now: datetime, phrase: str) -> datetime:
     if phrase.startswith('at'):
         return time_of_at(time_now, phrase)
+    elif phrase.startswith('in'):
+        m = re.match(r'.*(\d)(.*)', phrase)
+        number = int(m.group(1))
+        units = m.group(2).strip()
+        if 'hour' in units:
+            return time_now + timedelta(hours=number)
     raise Exception("I dunno")
 
 
