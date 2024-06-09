@@ -20,14 +20,19 @@ def get_time_phrase(str):
 
 def time_of(time_now: datetime, phrase: str) -> datetime:
     if phrase.startswith('at'):
-        number = int(re.findall(r'\d+', phrase)[0])
-        if time_now.hour > number:
-            number += 12
+        m = re.match(r'.*(\d)(.*)', phrase)
+        hour = int(m.group(1))
+        ampm = m.group(2)
+        if ampm == 'pm':
+            hour += 12
+        if not ampm:
+            if time_now.hour > hour:
+                hour += 12
         return datetime(
             time_now.year,
             time_now.month,
             time_now.day,
-            number
+            hour
         )
     return datetime.now()
 
