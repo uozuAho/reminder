@@ -13,11 +13,12 @@ def main():
         pass
 
 
-def get_time_phrase(str):
+def get_time_phrase(str: str):
     a = re.findall(r'at \d+.*$', str)
     if a: return a[-1]
     a = re.findall(r'in \d+.*$', str)
     if a: return a[-1]
+    if str.endswith('tomorrow'): return 'tomorrow'
     raise Exception("no time phrase found")
 
 
@@ -26,6 +27,8 @@ def time_of(time_now: datetime, phrase: str) -> datetime:
         return time_at(time_now, phrase)
     elif phrase.startswith('in'):
         return time_in(time_now, phrase)
+    elif phrase.endswith('tomorrow'):
+        return time_tomorrow(time_now)
     raise Exception("I dunno")
 
 
@@ -54,6 +57,17 @@ def time_at(time_now: datetime, phrase: str) -> datetime:
         time_now.month,
         time_now.day,
         hour
+    )
+
+
+def time_tomorrow(time_now: datetime):
+    start_of_day = 8
+    tomorrow = time_now + timedelta(days=1)
+    return datetime(
+        tomorrow.year,
+        tomorrow.month,
+        tomorrow.day,
+        start_of_day
     )
 
 

@@ -7,6 +7,7 @@ time_phrases = [
     ("do thing at 5", "at 5"),
     ("do thing at 5pm", "at 5pm"),
     ("do thing in 1 hour", "in 1 hour"),
+    ("do thing tomorrow", "tomorrow"),
 ]
 
 @pytest.mark.parametrize("text, expected", time_phrases)
@@ -22,7 +23,8 @@ time_of_cases = [
     (datetime(2024, 6, 8, 12, 0, 0), "at 5pm", datetime(2024, 6, 8, 17, 0 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "in 20 minutes", datetime(2024, 6, 8, 12, 20 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "in 1 hour", datetime(2024, 6, 8, 13, 0 ,0)),
-    (datetime(2024, 6, 8, 12, 0, 0), "in 2 hours", datetime(2024, 6, 8, 14, 0 ,0))
+    (datetime(2024, 6, 8, 12, 0, 0), "in 2 hours", datetime(2024, 6, 8, 14, 0 ,0)),
+    (datetime(2024, 6, 8, 12, 0, 0), "tomorrow", datetime(2024, 6, 9, 8, 0 ,0))
 ]
 
 @pytest.mark.parametrize("time_now, phrase, expected", time_of_cases)

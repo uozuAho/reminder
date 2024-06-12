@@ -17,6 +17,7 @@ pytest
 ```
 
 # todo
+- create a bash script to do these:
 ```sh
 remind all                  # DONE: show all reminders
 remind <message plus time>  # add a reminder
