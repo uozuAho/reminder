@@ -30,7 +30,7 @@ def time_of(time_now: datetime, phrase: str) -> datetime:
 
 
 def time_in(time_now, phrase):
-    m = re.match(r'.*(\d)(.*)', phrase)
+    m = re.match(r'[^\d]*(\d+)\s*(.*)', phrase)
     number = int(m.group(1))
     units = m.group(2).strip()
     if 'min' in units:
