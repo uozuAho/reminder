@@ -33,8 +33,11 @@ def time_in(time_now, phrase):
     m = re.match(r'.*(\d)(.*)', phrase)
     number = int(m.group(1))
     units = m.group(2).strip()
+    if 'min' in units:
+        return time_now + timedelta(minutes=number)
     if 'hour' in units:
         return time_now + timedelta(hours=number)
+    raise Exception(f'invalid unit {units}')
 
 
 def time_at(time_now: datetime, phrase: str) -> datetime:

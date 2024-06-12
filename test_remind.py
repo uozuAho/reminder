@@ -20,6 +20,7 @@ time_of_cases = [
     (datetime(2024, 6, 8, 10, 0, 0),  "at 9", datetime(2024, 6, 8, 21, 0 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "at 5", datetime(2024, 6, 8, 17, 0 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "at 5pm", datetime(2024, 6, 8, 17, 0 ,0)),
+    (datetime(2024, 6, 8, 12, 0, 0), "in 20 minutes", datetime(2024, 6, 8, 12, 20 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "in 1 hour", datetime(2024, 6, 8, 13, 0 ,0)),
     (datetime(2024, 6, 8, 12, 0, 0), "in 2 hours", datetime(2024, 6, 8, 14, 0 ,0))
 ]
