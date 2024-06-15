@@ -23,7 +23,7 @@ remind all                  # DONE: show all reminders
 ```
 
 # todo
-- tests for adding reminders
+- WIP : tests for adding reminders
 ```sh
 remind <message plus time>  # add a reminder
 remind                      # show all due reminders

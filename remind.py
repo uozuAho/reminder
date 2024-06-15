@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
+from io import TextIOWrapper
 import sys
 import re
+import typing as t
 
 
 def main():
@@ -8,13 +10,21 @@ def main():
     run(reminders_file, args)
 
 
-def run(reminders_file, args):
+def run(reminders_file, args: t.List[str]):
     if args == ['all']:
         with open(reminders_file) as file:
             for line in file.readlines():
                 print(line.strip())
-    else:
-        pass
+    elif len(args) > 0:
+        with open(reminders_file, 'w') as file:
+            add_reminder(file, datetime.now(), ' '.join(args))
+
+
+def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
+    time_phrase = get_time_phrase(text)
+    reminder_text = text.split(time_phrase)[0]
+    reminder_time = time_of(now, time_phrase)
+    reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}')
 
 
 def get_time_phrase(str: str):
