@@ -19,10 +19,13 @@ def run(reminders_file, args):
 
 def get_time_phrase(str: str):
     a = re.findall(r'at \d+.*$', str)
-    if a: return a[-1]
+    if a:
+        return a[-1]
     a = re.findall(r'in \d+.*$', str)
-    if a: return a[-1]
-    if str.endswith('tomorrow'): return 'tomorrow'
+    if a:
+        return a[-1]
+    if str.endswith('tomorrow'):
+        return 'tomorrow'
     raise Exception("no time phrase found")
 
 
@@ -49,6 +52,8 @@ def time_in(time_now, phrase):
 
 def time_at(time_now: datetime, phrase: str) -> datetime:
     m = re.match(r'.*(\d)(.*)', phrase)
+    if not m:
+        raise Exception("could not match time_at")
     hour = int(m.group(1))
     ampm = m.group(2)
     if ampm == 'pm':

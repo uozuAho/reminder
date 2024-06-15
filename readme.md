@@ -31,12 +31,15 @@ remind snz <id> <time>      # 'snooze' a reminder until time
                             # reminder id: hash of the message?
 remind snz [time]           # snooze most overdue reminder
 ```
+- add `remind` to bashrc
+- time phrases:
+    - DONE at 5pm
+    - DONE in 1 hour(s), minutes
+    - DONE tomorrow
+    - in Xday(s),week(s)
+    - on friday
+    - next week
+    - this weekend
 
-time phrases:
-- DONE at 5pm
-- DONE in 1 hour(s), minutes
-- DONE tomorrow
-- in Xday(s),week(s)
-- on friday
-- next week
-- this weekend
+- maybe: cron + broadcast?
+- maybe: email?
