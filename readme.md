@@ -14,12 +14,17 @@ pip-sync
 
 # test
 pytest
+
+# add alias
+. remind.sh
+
+# commands
+remind all                  # DONE: show all reminders
 ```
 
 # todo
-- create a bash script to do these:
+- tests for adding reminders
 ```sh
-remind all                  # DONE: show all reminders
 remind <message plus time>  # add a reminder
 remind                      # show all due reminders
 remind snz <id> <time>      # 'snooze' a reminder until time
@@ -30,7 +35,7 @@ remind snz [time]           # snooze most overdue reminder
 time phrases:
 - DONE at 5pm
 - DONE in 1 hour(s), minutes
-- tomorrow
+- DONE tomorrow
 - in Xday(s),week(s)
 - on friday
 - next week

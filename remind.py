@@ -5,6 +5,10 @@ import re
 
 def main():
     _, reminders_file, *args = sys.argv
+    run(reminders_file, args)
+
+
+def run(reminders_file, args):
     if args == ['all']:
         with open(reminders_file) as file:
             for line in file.readlines():
