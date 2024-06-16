@@ -1,8 +1,13 @@
 from datetime import datetime
 from io import StringIO
+from pathlib import Path
 import pytest
 
 import remind
+
+
+TEST_INFILE = Path('test_data/reminders.txt')
+TEST_OUTFILE = Path('test_output/reminders.txt')
 
 
 def test_add_reminder():
@@ -12,6 +17,12 @@ def test_add_reminder():
     file.seek(0)
     text = file.read()
     assert text == "2024-06-15 17:00: eat chicken"
+
+
+def test_add_reminder_appends():
+    run("eat chicken at 5pm")
+    result = read_default_output_file()
+    assert len(result.splitlines()) == 3
 
 
 time_phrases = [
@@ -41,3 +52,14 @@ time_of_cases = [
 @pytest.mark.parametrize("time_now, phrase, expected", time_of_cases)
 def test_time_of(time_now, phrase, expected):
     assert remind.time_of(time_now, phrase) == expected
+
+
+def run(text: str,
+        infile = TEST_INFILE,
+        outfile = TEST_OUTFILE):
+    remind.run(infile, outfile, text.split())
+
+
+def read_default_output_file():
+    with open(TEST_OUTFILE) as file:
+        return file.read()

@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from io import TextIOWrapper
+from pathlib import Path
 import sys
 import re
 import typing as t
@@ -7,16 +8,16 @@ import typing as t
 
 def main():
     _, reminders_file, *args = sys.argv
-    run(reminders_file, args)
+    run(reminders_file, reminders_file, args)
 
 
-def run(reminders_file, args: t.List[str]):
+def run(infile: Path, outfile: Path, args: t.List[str]):
     if args == ['all']:
-        with open(reminders_file) as file:
+        with open(infile) as file:
             for line in file.readlines():
                 print(line.strip())
     elif len(args) > 0:
-        with open(reminders_file, 'w') as file:
+        with open(outfile, 'w') as file:
             add_reminder(file, datetime.now(), ' '.join(args))
 
 

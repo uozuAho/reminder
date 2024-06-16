@@ -24,7 +24,6 @@ remind all                  # DONE: show all reminders
 
 # todo
 - WIP : tests for adding reminders
-    - extra space at end
     - test for append instead of overwrite
 ```sh
 remind <message plus time>  # add a reminder
