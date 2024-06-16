@@ -12,12 +12,16 @@ def main():
 
 
 def run(infile: Path, outfile: Path, args: t.List[str]):
+    if outfile != infile:
+        with open(infile) as ifile:
+            with open(outfile, 'w') as ofile:
+                ofile.write(ifile.read())
     if args == ['all']:
         with open(infile) as file:
             for line in file.readlines():
                 print(line.strip())
     elif len(args) > 0:
-        with open(outfile, 'w') as file:
+        with open(outfile, 'a') as file:
             add_reminder(file, datetime.now(), ' '.join(args))
 
 
