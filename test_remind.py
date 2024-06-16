@@ -1,5 +1,4 @@
 from datetime import datetime
-from io import StringIO
 from pathlib import Path
 import pytest
 
@@ -11,18 +10,13 @@ TEST_OUTFILE = Path('test_output/reminders.txt')
 
 
 def test_add_reminder():
-    file = StringIO()
     now = datetime(2024, 6, 15, 12)
-    remind.add_reminder(file, now, "eat chicken at 5pm")
-    file.seek(0)
-    text = file.read()
-    assert text == "2024-06-15 17:00: eat chicken"
+    run("eat chicken at 5pm", now)
+    result = default_output()
+    result_lines = result.splitlines()
+    assert len(result_lines) == 3  # appends to the end
+    assert result_lines[2] == "2024-06-15 17:00: eat chicken"
 
-
-def test_add_reminder_appends():
-    run("eat chicken at 5pm")
-    result = read_default_output_file()
-    assert len(result.splitlines()) == 3
 
 
 time_phrases = [
@@ -55,11 +49,12 @@ def test_time_of(time_now, phrase, expected):
 
 
 def run(text: str,
+        now: datetime,
         infile = TEST_INFILE,
         outfile = TEST_OUTFILE):
-    remind.run(infile, outfile, text.split())
+    remind.run(infile, outfile, now, text.split())
 
 
-def read_default_output_file():
+def default_output():
     with open(TEST_OUTFILE) as file:
         return file.read()

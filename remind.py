@@ -8,10 +8,10 @@ import typing as t
 
 def main():
     _, reminders_file, *args = sys.argv
-    run(reminders_file, reminders_file, args)
+    run(reminders_file, reminders_file, datetime.now(), args)
 
 
-def run(infile: Path, outfile: Path, args: t.List[str]):
+def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
     if outfile != infile:
         with open(infile) as ifile:
             with open(outfile, 'w') as ofile:
@@ -22,7 +22,7 @@ def run(infile: Path, outfile: Path, args: t.List[str]):
                 print(line.strip())
     elif len(args) > 0:
         with open(outfile, 'a') as file:
-            add_reminder(file, datetime.now(), ' '.join(args))
+            add_reminder(file, now, ' '.join(args))
 
 
 def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
