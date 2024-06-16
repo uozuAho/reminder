@@ -22,7 +22,7 @@ def run(reminders_file, args: t.List[str]):
 
 def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
     time_phrase = get_time_phrase(text)
-    reminder_text = text.split(time_phrase)[0]
+    reminder_text = text.split(time_phrase)[0].strip()
     reminder_time = time_of(now, time_phrase)
     reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}')
 

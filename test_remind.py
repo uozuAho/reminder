@@ -4,6 +4,7 @@ import pytest
 
 import remind
 
+
 def test_add_reminder():
     file = StringIO()
     now = datetime(2024, 6, 15, 12)
@@ -11,6 +12,7 @@ def test_add_reminder():
     file.seek(0)
     text = file.read()
     assert text == "2024-06-15 17:00: eat chicken"
+
 
 time_phrases = [
     ("do thing at 5", "at 5"),
