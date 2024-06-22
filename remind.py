@@ -15,7 +15,10 @@ def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
     if outfile != infile:
         with open(infile) as ifile:
             with open(outfile, 'w') as ofile:
-                ofile.write(ifile.read())
+                intext = ifile.read()
+                ofile.write(intext)
+                if not intext.endswith('\n'):
+                    ofile.writelines([''])
     if args == ['all']:
         with open(infile) as file:
             for line in file.readlines():
@@ -29,7 +32,7 @@ def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
     time_phrase = get_time_phrase(text)
     reminder_text = text.split(time_phrase)[0].strip()
     reminder_time = time_of(now, time_phrase)
-    reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}')
+    reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}\n')
 
 
 def get_time_phrase(str: str):

@@ -23,11 +23,10 @@ remind all                  # DONE: show all reminders
 ```
 
 # todo
-- WIP : tests for adding reminders
-    - test for append instead of overwrite
 ```sh
-remind <message plus time>  # add a reminder
 remind                      # show all due reminders
+remind rm <substring>       # remove reminder matching substr (only 1)
+remind <message plus time>  # add a reminder
 remind snz <id> <time>      # 'snooze' a reminder until time
                             # reminder id: hash of the message?
 remind snz [time]           # snooze most overdue reminder

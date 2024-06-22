@@ -18,6 +18,15 @@ def test_add_reminder():
     assert result_lines[2] == "2024-06-15 17:00: eat chicken"
 
 
+def test_add_reminder_appends_line():
+    now = datetime(2024, 6, 15, 12)
+    run("eat chicken at 5pm", now)
+    # do 2 in case original file already has a newline:
+    run("eat chicken at 5pm", now, infile=TEST_OUTFILE)
+    result = default_output()
+    result_lines = result.splitlines()
+    assert len(result_lines) == 4
+
 
 time_phrases = [
     ("do thing at 5", "at 5"),
