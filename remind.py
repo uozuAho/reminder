@@ -33,13 +33,7 @@ def main():
 
 def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
     output_text = ''
-    if outfile != infile:
-        with open(infile) as ifile:
-            with open(outfile, 'w') as ofile:
-                intext = ifile.read()
-                ofile.write(intext)
-                if not intext.endswith('\n'):
-                    ofile.writelines([''])
+    prep_outfile(infile, outfile)
     if args == ['all']:
         with open(infile) as file:
             for line in file.readlines():
@@ -48,12 +42,21 @@ def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
         with open(outfile, 'a') as file:
             add_reminder(file, now, ' '.join(args))
     else:
-        # no args
         for reminder in read_reminders(infile):
             if reminder.is_due(now):
                 output_text += f'{reminder}'
     print(output_text)
     return output_text
+
+
+def prep_outfile(infile, outfile):
+    if outfile != infile:
+        with open(infile) as ifile:
+            with open(outfile, 'w') as ofile:
+                intext = ifile.read()
+                ofile.write(intext)
+                if not intext.endswith('\n'):
+                    ofile.writelines([''])
 
 
 def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
