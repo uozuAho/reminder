@@ -34,17 +34,25 @@ def main():
 def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
     output_text = ''
     prep_outfile(infile, outfile)
-    if args == ['all']:
-        with open(infile) as file:
-            for line in file.readlines():
-                output_text += line.strip() + '\n'
-    elif len(args) > 0:
-        with open(outfile, 'a') as file:
-            add_reminder(file, now, ' '.join(args))
-    else:
+    if len(args) == 0:
         for reminder in read_reminders(infile):
             if reminder.is_due(now):
                 output_text += f'{reminder}'
+    elif args == ['all']:
+        with open(infile) as file:
+            for line in file.readlines():
+                output_text += line.strip() + '\n'
+    elif args[0] == 'rm':
+        to_rm = ''.join(args[1:])
+        with open(infile) as file:
+            in_lines = file.readlines()
+        num_matches = sum(to_rm in x for x in in_lines)
+        if num_matches == 1:
+            with open(outfile, 'w') as ofile:
+                ofile.writelines(x for x in in_lines if to_rm not in x)
+    else:
+        with open(outfile, 'a') as file:
+            add_reminder(file, now, ' '.join(args))
     print(output_text)
     return output_text
 

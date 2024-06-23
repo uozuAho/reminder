@@ -19,15 +19,17 @@ pytest
 . remind.sh
 
 # commands
-remind all                  # DONE: show all reminders
+remind                      # show due reminders
+remind all                  # show all reminders
 ```
 
 # todo
-- WIP: `remind                      # show all due reminders`
-    - extract datetime formatting/reminder parsing
-- add a test for `remind all`
+- WIP: remind rm <substring>       # remove reminder matching substr (only 1)
+    - removes one
+    - throws on multi match
+    - warns when nothing done
+- print a confirmation eg "I'll remind you: '' at {}", "reminder deleted: {}"
 ```sh
-remind rm <substring>       # remove reminder matching substr (only 1)
 remind <message plus time>  # add a reminder
 remind snz <id> <time>      # 'snooze' a reminder until time
                             # reminder id: hash of the message?

@@ -35,6 +35,15 @@ def test_remind_lists_due_reminders():
     assert stdout_text == "2015-06-04 15:00: do stuff in the past"
 
 
+def test_rm_removes_reminder():
+    now = datetime(2024, 6, 15, 12)
+    run("eat chicken at 5pm", now)
+    run("rm eat chicken", now, infile=TEST_OUTFILE)
+    original = default_infile_text()
+    result = default_outfile_text()
+    assert result == original
+
+
 time_phrases = [
     ("do thing at 5", "at 5"),
     ("do thing at 5pm", "at 5pm"),
@@ -74,4 +83,9 @@ def run(text: t.Optional[str],
 
 def default_outfile_text():
     with open(TEST_OUTFILE) as file:
+        return file.read()
+
+
+def default_infile_text():
+    with open(TEST_INFILE) as file:
         return file.read()
