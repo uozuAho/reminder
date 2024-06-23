@@ -25,6 +25,7 @@ remind all                  # show all reminders
 
 # todo
 - WIP: remind rm <substring>       # remove reminder matching substr (only 1)
+    - debugging: try py 3.12, wsl
     - removes one
     - throws on multi match
     - warns when nothing done
