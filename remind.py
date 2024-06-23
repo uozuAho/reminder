@@ -1,9 +1,29 @@
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from io import TextIOWrapper
 from pathlib import Path
 import sys
 import re
 import typing as t
+
+
+@dataclass
+class Reminder:
+    due: datetime
+    msg: str
+    _date_format = "%Y-%m-%d %H:%M"
+
+    @staticmethod
+    def from_line(line: str):
+        date_str = line[:16]
+        due = datetime.strptime(date_str, Reminder._date_format)
+        return Reminder(due, line[18:].strip())
+
+    def is_due(self, now: datetime):
+        return now > self.due
+
+    def __str__(self):
+        return f'{self.due.strftime(Reminder._date_format)}: {self.msg}'
 
 
 def main():
@@ -29,8 +49,9 @@ def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
             add_reminder(file, now, ' '.join(args))
     else:
         # no args
-        for due, msg in get_due_reminders(infile, now):
-            output_text += f'{due.strftime("%Y-%m-%d %H:%M")}: {msg}'
+        for reminder in read_reminders(infile):
+            if reminder.is_due(now):
+                output_text += f'{reminder}'
     print(output_text)
     return output_text
 
@@ -39,21 +60,14 @@ def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
     time_phrase = get_time_phrase(text)
     reminder_text = text.split(time_phrase)[0].strip()
     reminder_time = time_of(now, time_phrase)
-    reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}\n')
+    reminder = Reminder(reminder_time, reminder_text)
+    reminders_file.write(f'{reminder}\n')
 
 
-def get_due_reminders(file: Path, now: datetime) -> t.Iterable[t.Tuple[datetime, str]]:
+def read_reminders(file: Path) -> t.Iterable[Reminder]:
     with open(file) as infile:
         for line in infile:
-            due, message = read_reminder(line)
-            if now > due:
-                yield due, message
-
-
-def read_reminder(line: str):
-    date_str = line[:16]
-    due = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
-    return due, line[18:].strip()
+            yield Reminder.from_line(line)
 
 
 def get_time_phrase(str: str):
