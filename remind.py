@@ -12,6 +12,7 @@ def main():
 
 
 def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
+    output_text = ''
     if outfile != infile:
         with open(infile) as ifile:
             with open(outfile, 'w') as ofile:
@@ -22,10 +23,16 @@ def run(infile: Path, outfile: Path, now: datetime, args: t.List[str]):
     if args == ['all']:
         with open(infile) as file:
             for line in file.readlines():
-                print(line.strip())
+                output_text += line.strip() + '\n'
     elif len(args) > 0:
         with open(outfile, 'a') as file:
             add_reminder(file, now, ' '.join(args))
+    else:
+        # no args
+        for due, msg in get_due_reminders(infile, now):
+            output_text += f'{due.strftime("%Y-%m-%d %H:%M")}: {msg}'
+    print(output_text)
+    return output_text
 
 
 def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
@@ -33,6 +40,20 @@ def add_reminder(reminders_file: TextIOWrapper, now: datetime, text: str):
     reminder_text = text.split(time_phrase)[0].strip()
     reminder_time = time_of(now, time_phrase)
     reminders_file.write(f'{reminder_time.strftime("%Y-%m-%d %H:%M")}: {reminder_text}\n')
+
+
+def get_due_reminders(file: Path, now: datetime) -> t.Iterable[t.Tuple[datetime, str]]:
+    with open(file) as infile:
+        for line in infile:
+            due, message = read_reminder(line)
+            if now > due:
+                yield due, message
+
+
+def read_reminder(line: str):
+    date_str = line[:16]
+    due = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+    return due, line[18:].strip()
 
 
 def get_time_phrase(str: str):
